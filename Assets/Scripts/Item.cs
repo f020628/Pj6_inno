@@ -23,9 +23,9 @@ public class Item : MonoBehaviour
     public Button addToBackpackButton; // 添加到背包按钮
     private Backpack playerBackpack;
     private void Awake()
-{
-    playerBackpack = GameObject.FindGameObjectWithTag("Backpack").GetComponent<Backpack>();
-}
+    {
+        playerBackpack = GameObject.FindGameObjectWithTag("Backpack").GetComponent<Backpack>();
+    }
     private void Start()
     {
         closeButton.onClick.AddListener(ClosePanel);
@@ -78,6 +78,10 @@ public class Item : MonoBehaviour
     {
         if (playerBackpack.AddItem(this))
         {
+            if (NPCDialogue.inRange)
+            {
+                NPCDialogue.currentNPC.StartD();
+            }
             // 如果物品成功添加到背包，可以进行其他操作，例如隐藏物品或禁用按钮
             itemInfoPanel.SetActive(false);
             gameObject.SetActive(false);
