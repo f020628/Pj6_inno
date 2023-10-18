@@ -5,11 +5,12 @@ using UnityEngine;
 public class Tent : MonoBehaviour
 {
     public List<GameObject> contents;
-
+    private bool empty = false;
+    private int count = 0;
     public GameObject panel;
     void Start()
     {
-        
+        count = contents.Count;
     }
 
     // Update is called once per frame
@@ -22,10 +23,17 @@ public class Tent : MonoBehaviour
         }
     }
     public void Search()
-    {
+    {   if (empty)
+        {
+            return;
+        }
         GameObject content = contents[0];
         contents.RemoveAt(0);
-
+        count--;
+        if (count == 0)
+        {
+            empty = true;
+        }
         Vector3 position = transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
         Instantiate(content, position, Quaternion.identity);
     }
