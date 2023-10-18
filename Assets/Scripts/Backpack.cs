@@ -8,10 +8,13 @@ public class Backpack : MonoBehaviour
 {
     private float totalWeight = 0; 
     private const float maxWeight = 30f; 
+
+    private float totalValue = 0;
     public GameObject itemSlotPrefab; 
     public Transform content; 
 
     private List<Item> items = new List<Item>();
+    public TextMeshProUGUI totalWeightText;
 
     public float GetTotalWeight()
     {
@@ -23,6 +26,7 @@ public class Backpack : MonoBehaviour
         if (totalWeight + item.weight <= maxWeight)
         {
             totalWeight += item.weight;
+            totalValue += item.Value;
             items.Insert(0, item); // 将新物品添加到列表的开始位置
             GameObject newItemSlot = Instantiate(itemSlotPrefab, content);
             newItemSlot.transform.SetAsFirstSibling(); // 确保新的slot在顶部
@@ -34,5 +38,11 @@ public class Backpack : MonoBehaviour
         {
             return false; 
         }
+    }
+
+    void Update()
+    {
+        totalWeightText.text = "TotalWeight:" + totalWeight + "/" + maxWeight+" KG\nTotalValue:"+totalValue+" Yuan";
+        
     }
 }

@@ -8,6 +8,9 @@ public class Item : MonoBehaviour
 {
     public string itemName;
     public float estimatedValue;
+    public float Value;
+
+    public float initialweight;
     public float weight;
     public string owner;
     public bool ownerFixed = false; // 新增属性，指示owner是否被固定
@@ -25,13 +28,19 @@ public class Item : MonoBehaviour
     private void Awake()
     {
         playerBackpack = GameObject.FindGameObjectWithTag("Backpack").GetComponent<Backpack>();
+      
     }
     private void Start()
     {
         closeButton.onClick.AddListener(ClosePanel);
         itemInfoPanel.SetActive(false);
-        Debug.Log("Item Start"+owner);
         addToBackpackButton.onClick.AddListener(AddToBackpack);
+        weight = Random.Range(initialweight * 0.8f, initialweight * 1.2f);
+        weight = Mathf.Round(weight * 100f) / 100f;
+        Value = Random.Range(estimatedValue * 0.8f, estimatedValue * 1.2f);
+        Value = Mathf.Round(Value * 100f) / 100f;
+        Debug.Log("Item Start"+owner);
+   
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,8 +62,8 @@ public class Item : MonoBehaviour
     private void ShowItemInfo()
     {
         itemNameText.text = "Item Name: " + itemName;
-        estimatedValueText.text = "Estimated Value: " + estimatedValue;
-        weightText.text = "Weight: " + weight;
+        estimatedValueText.text = "Estimated Value: " + estimatedValue + "Yuan";
+        weightText.text = "Weight: " + weight + "KG";
         ownerText.text = "Owner: " + owner;
 
         // 设置面板位置为物品上方
@@ -71,7 +80,13 @@ public class Item : MonoBehaviour
     }
     public void SetOwner(string newOwner)
     {
+        if (ownerFixed)
+        {
+            return;
+        }
+        Debug.Log("Setting owner for " + itemName + " to " + newOwner);
         owner = newOwner;
+        ownerFixed = true;
     }
 
      public void AddToBackpack()
@@ -90,7 +105,7 @@ public class Item : MonoBehaviour
 
     public string GetInfo()
     {
-        return itemName + "\n" + "Estimated Value: " + estimatedValue + "\n" + "Weight: " + weight + "\n" + "Owner: " + owner;
+        return itemName + "\n" + "Estimated Value: " + estimatedValue + "Yuan\n" + "Weight: " + weight + "KG\n" + "Owner: " + owner;
     }
 }
 

@@ -8,21 +8,14 @@ public class Area : MonoBehaviour
 
     private BoxCollider2D boxCollider;
 
-    private void Start()
+    void OnTriggerEnter2D(Collider2D col)
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-
-        // 获取该区域内的所有碰撞器
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(boxCollider.bounds.center, boxCollider.size, 0);
-        
-        foreach(Collider2D col in colliders)
+        Item item = col.GetComponent<Item>();
+        if(item && !item.ownerFixed)
         {
-            Item item = col.GetComponent<Item>();
-            if(item)
-            {
-                item.SetOwner(owner);
-            }
+            item.SetOwner(owner);
         }
     }
+
 }
 

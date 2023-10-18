@@ -12,7 +12,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Item
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1863043123
+    locked: 0
+  - name: tent
+    uniqueID: 840277791
     locked: 0
   - name: Item
     uniqueID: 419324923
